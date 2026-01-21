@@ -2,6 +2,9 @@
 
 A modern web application that lets you interact with SQL databases using natural language, powered by the Model Context Protocol (MCP).
 
+<img width="1904" height="915" alt="image" src="https://github.com/user-attachments/assets/00bb5b79-175e-4d0a-9747-2582ec9d2f71" />
+
+
 ## Features
 
 - **Natural Language Queries**: Ask questions in plain English, get results instantly
@@ -10,6 +13,9 @@ A modern web application that lets you interact with SQL databases using natural
 - **Schema Explorer**: Browse database structure with an intuitive sidebar
 - **Dark & Light Modes**: Modern design with light/dark theme support
 - **Responsive Design**: Works on desktop, tablet, and mobile
+
+<img width="1919" height="922" alt="image" src="https://github.com/user-attachments/assets/ef44e855-f92a-4264-8c7b-a63d1375e6b3" />
+
 
 ## Prerequisites
 
