@@ -6,6 +6,7 @@
 import Database from 'better-sqlite3';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fs from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,6 +14,12 @@ const __dirname = path.dirname(__filename);
 const dbPath = path.join(__dirname, 'demo.sqlite');
 
 console.log('Creating demo database at:', dbPath);
+
+// Delete existing database if it exists
+if (fs.existsSync(dbPath)) {
+  fs.unlinkSync(dbPath);
+  console.log('Removed existing database');
+}
 
 const db = new Database(dbPath);
 
