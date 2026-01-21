@@ -1,0 +1,37 @@
+{
+  "name": "database-mcp",
+  "version": "1.0.0",
+  "description": "Natural language database interface using MCP (Model Context Protocol) with modern web UI",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "nodemon --exec tsx src/server.ts",
+    "demo:setup": "tsx demo/setup.ts",
+    "demo:run": "npm run demo:setup && npm run dev"
+  },
+  "keywords": ["database", "mcp", "sql", "natural-language", "ai", "llm"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^12.6.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "mssql": "^12.2.0",
+    "mysql2": "^3.16.1",
+    "node-sql-parser": "^5.4.0",
+    "pg": "^8.17.1"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/mssql": "^9.1.9",
+    "@types/node": "^25.0.9",
+    "@types/pg": "^8.16.0",
+    "nodemon": "^3.1.11",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
