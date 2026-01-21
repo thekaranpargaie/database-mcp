@@ -738,7 +738,9 @@ class DatabaseMCP {
             const loadingEl = document.getElementById(loadingId);
             if (loadingEl) loadingEl.remove();
             
-            this.addMessage('assistant', `<strong>Error:</strong> ${this.escapeHtml(error.message)}`);
+            // Create error message that will be properly formatted
+            const errorMsg = `**Error:** ${error.message}`;
+            this.addMessage('assistant', errorMsg);
         }
     }
 
@@ -785,29 +787,27 @@ class DatabaseMCP {
     }
 
     formatMessage(content) {
-        // Decode HTML entities first (handles already-escaped content from API)
-        const textarea = document.createElement('textarea');
-        textarea.innerHTML = content;
-        content = textarea.value;
+        // Remove leading/trailing whitespace
+        content = content.trim();
         
-        // Now escape HTML to prevent XSS
-        content = this.escapeHtml(content);
+        // Escape HTML to prevent XSS
+        let escapedContent = this.escapeHtml(content);
         
         // Convert markdown-style code blocks
-        content = content.replace(/`{3}(\w+)?\n([\s\S]+?)`{3}/g, (match, lang, code) => {
+        escapedContent = escapedContent.replace(/`{3}(\w+)?\n([\s\S]+?)`{3}/g, (match, lang, code) => {
             return `<div class="code-block"><button class="copy-btn" onclick="app.copyCode(this)">Copy</button><pre><code>${code.trim()}</code></pre></div>`;
         });
 
         // Convert inline code
-        content = content.replace(/`([^`]+)`/g, '<code>$1</code>');
+        escapedContent = escapedContent.replace(/`([^`]+)`/g, '<code>$1</code>');
 
         // Convert bold
-        content = content.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+        escapedContent = escapedContent.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 
         // Convert line breaks
-        content = content.replace(/\n/g, '<br>');
+        escapedContent = escapedContent.replace(/\n/g, '<br>');
 
-        return content;
+        return escapedContent;
     }
 
     escapeHtml(text) {

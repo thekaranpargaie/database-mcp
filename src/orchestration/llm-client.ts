@@ -43,8 +43,26 @@ export class OpenAIClient implements LLMClient {
     });
 
     if (!response.ok) {
-      const error = await response.text();
-      throw new Error(`LLM API error: ${response.status} - ${error}`);
+      let errorMessage = '';
+      const contentType = response.headers.get('content-type');
+      
+      if (contentType?.includes('application/json')) {
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.error?.message || JSON.stringify(errorData);
+        } catch {
+          errorMessage = await response.text();
+        }
+      } else {
+        errorMessage = await response.text();
+      }
+      
+      // Extract plain text from HTML if present
+      if (errorMessage.includes('<')) {
+        errorMessage = errorMessage.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+      }
+      
+      throw new Error(`LLM API error: ${response.status} - ${errorMessage}`);
     }
 
     const data: any = await response.json();
@@ -104,8 +122,26 @@ export class GroqClient implements LLMClient {
     });
 
     if (!response.ok) {
-      const error = await response.text();
-      throw new Error(`Groq API error: ${response.status} - ${error}`);
+      let errorMessage = '';
+      const contentType = response.headers.get('content-type');
+      
+      if (contentType?.includes('application/json')) {
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.error?.message || JSON.stringify(errorData);
+        } catch {
+          errorMessage = await response.text();
+        }
+      } else {
+        errorMessage = await response.text();
+      }
+      
+      // Extract plain text from HTML if present
+      if (errorMessage.includes('<')) {
+        errorMessage = errorMessage.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+      }
+      
+      throw new Error(`Groq API error: ${response.status} - ${errorMessage}`);
     }
 
     const data: any = await response.json();
